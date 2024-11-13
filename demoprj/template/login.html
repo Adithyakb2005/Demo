@@ -10,21 +10,28 @@
   <div class="container d-flex justify-content-center align-items-center vh-100">
     <div class="col-md-4">
       <h3 class="text-center mb-4 text-dark">LOGIN</h3>
-      <form>
+      <form action="" method="post">
+        {% csrf_token %}
         <div class="mb-3">
-          <label for="email" class="form-label text-light"><b>Email address</b></label>
-          <input type="email" class="form-control" id="email" placeholder="Enter your email">
+          <label for="username" class="form-label text-light"><b>username</b></label>
+          <input type="text" class="form-control" name="username" id="username" placeholder="Enter your name">
         </div>
         
         <div class="mb-3">
           <label for="password" class="form-label text-light"><b>Password</b></label>
-          <input type="password" class="form-control" id="password" placeholder="Enter your password">
+          <input type="password" class="form-control" name="password" id="password" placeholder="Enter your password">
         </div>
-        
+        {% if messages %}
+        <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+      {% endfor %}
+        </ul>
+        {% endif %}
         <button type="submit" class="btn btn-danger w-100">Login</button>
       </form>
       <div class="text-center mt-3">
-        <a href="./register" class="text-decoration-none text-light">Register Now</a>
+        <a href="./register.html" class="text-decoration-none text-light">Register Now</a>
       </div>
     </div>
   </div>
