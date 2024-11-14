@@ -11,11 +11,14 @@ def e_shop_login(req):
             login(req,data)
             return redirect(shop_home)
         else:
-            messages.warning(req, "Your account expires in three days.")
+            messages.warning(req, "Invalid username or password.")
             return redirect(e_shop_login)
     else:
         return render(req,'login.html')
 
-
+def e_shop_logout(req):
+    logout(req)
+    req.session.flush()
+    return redirect(e_shop_login)
 def shop_home(req):
-    return render(req,'shop\home.html')
+    return render(req,'shop/home.html')
