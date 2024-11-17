@@ -22,3 +22,5 @@ def e_shop_logout(req):
     return redirect(e_shop_login)
 def shop_home(req):
     return render(req,'shop/home.html')
+def register(req):
+    return render(req,'register.html')
