@@ -17,10 +17,10 @@
           <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav">
               <li class="nav-item">
-                <a class="nav-link" href="home">Home</a>
+                <a class="nav-link" href="#">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Add produt</a>
+                <a class="nav-link" href="addproduct">Add produt</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="logout">logout</a>
@@ -29,7 +29,23 @@
           </div>
         </div>
       </nav> 
+      <div  class="container">
+  <div class="row">
+    {% for pro in products %}
+    <div class="col-lg-4">
+      <div class="card" style="width:400px">
+        <img class="card-img-top" src="{{pro.img.url}}" alt="Card image" style="width:100%;height: 400px;">
+        <div class="card-body">
+          <h4 class="card-title">{{pro.name}}</h4>
+          <p class="card-text">{{pro.dis}}</p>
+          <a href="#" class="btn btn-primary">See Profile</a>
+        </div>
+      </div>
       
+    </div>
+    {% endfor %}
+  </div>
+</div>  
       
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 

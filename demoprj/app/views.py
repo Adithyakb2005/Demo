@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
+from .models import Product
 # Create your views here.
 def e_shop_login(req):
     if req.method=='POST':
@@ -22,5 +23,21 @@ def e_shop_logout(req):
     return redirect(e_shop_login)
 def shop_home(req):
     return render(req,'shop/home.html')
-def register(req):
-    return render(req,'register.html')
+def addproduct(req):
+    if 'shop' in req.session:
+        if req.method=='POST':
+            pid=req.POST['pid']
+            name=req.POST['name']
+            descrip=req.POST['descrip']
+            price=req.POST['price']
+            stock=req.POST['stock']
+            file=req.FILES['img']
+            data=Product.objects.create(pid=pid,name=name,dis=descrip,price=price,stock=stock,img=file)
+            data.save()
+            return redirect(shop_home)
+        else:
+            return render(req,'shop/addproduct.html')
+    else:
+        return redirect(e_shop_login)
+# def register(req):
+#     return render(req,'register.html')

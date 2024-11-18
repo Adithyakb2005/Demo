@@ -6,6 +6,5 @@ class Product(models.Model):
     name=models.TextField()
     dis=models.TextField()
     price=models.IntegerField()
-    price=models.IntegerField()
     stock=models.IntegerField()
     img=models.FileField()
