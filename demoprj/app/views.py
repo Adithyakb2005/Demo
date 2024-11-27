@@ -33,8 +33,13 @@ def e_shop_logout(req):
     req.session.flush()
     return redirect(e_shop_login)
 #---------------------admin------------------------
+
 def shop_home(req):
-    return render(req,'shop/home.html')
+    if 'shop' in req.session:
+        data=Product.objects.all()
+        return render(req,'shop/home.html',{'Products':data})
+    else:
+        return redirect(e_shop_login)
 
 def addproduct(req) :
     if 'shop' in req.session:
@@ -81,6 +86,9 @@ def deleteproduct(req,pid):
     os.remove('media/'+file)
     data.delete()
     return redirect(shop_home)
+def view_bookings(req):
+    buy=Buy.objects.all()[::-1]
+    return render(req,'shop/viewbooking.html', {'buy':buy})
 #--------------------------------user--------------------
 def register(req):
     if req.method=='POST':
@@ -138,3 +146,29 @@ def qty_dec(req,cid):
     if data.qty==0:
         data.delete()
     return redirect(view_cart)
+def cart_pro_buy(req,cid):
+    cart=Cart.objects.get(pk=cid)
+    product=cart.product
+    user=cart.user
+    qty=cart.qty
+    price=product.price*qty
+    buy=Buy.objects.create(product=product,user=user,qty=qty,price=price)
+    buy.save()
+    return redirect(bookings)
+
+
+def pro_buy(req,pid):
+    product=Product.objects.get(pk=pid)
+    user=User.objects.get(username=req.session['user'])
+    qty=1
+    price=product.price
+    buy=Buy.objects.create(product=product,user=user,qty=qty,price=price)
+    buy.save()
+    return redirect(bookings)
+
+
+
+def bookings(req):
+    user=User.objects.get(username=req.session['user'])
+    buy=Buy.objects.filter(user=user)[::-1]
+    return render(req,'user/booking.html',{'bookings':buy})
